@@ -41,17 +41,21 @@ class MicrosoftAuthenticationBackend(ModelBackend):
         if code is not None:
             # fetch OAuth token
             token = self.microsoft.fetch_token(code=code)
+            logging.info(f'token: {token}')
 
             # validate permission scopes
             if "access_token" in token and self.microsoft.valid_scopes(
                 token["scope"]
             ):
                 user = self._authenticate_user()
+                logging.info(f'user: {user}')
+
+            if 'access_token' in token:
                 request.session['ms_access_token'] = token['access_token']
 
         if user is not None:
             self._call_hook(user)
-
+        logging.info(f'the user: {user}')
         return user
 
     def _authenticate_user(self):
