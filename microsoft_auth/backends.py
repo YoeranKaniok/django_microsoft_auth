@@ -47,6 +47,7 @@ class MicrosoftAuthenticationBackend(ModelBackend):
                 token["scope"]
             ):
                 user = self._authenticate_user()
+                request.session['ms_access_token'] = token['access_token']
 
         if user is not None:
             self._call_hook(user)
