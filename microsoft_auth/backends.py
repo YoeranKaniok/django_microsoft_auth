@@ -51,6 +51,8 @@ class MicrosoftAuthenticationBackend(ModelBackend):
                 logging.info(f'user: {user}')
 
             if 'access_token' in token:
+                print(token)
+                print(token['access_token'])
                 request.session['ms_access_token'] = token['access_token']
 
         if user is not None:
