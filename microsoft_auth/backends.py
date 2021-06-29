@@ -173,7 +173,7 @@ class MicrosoftAuthenticationBackend(ModelBackend):
 
             try:
                 # create new Django user from provided data
-                user = User.objects.get(email=data["upn"])
+                user = User.objects.get(email=data["preferred_username"])
 
                 if user.first_name == "" and user.last_name == "":
                     user.first_name = first_name
@@ -184,7 +184,7 @@ class MicrosoftAuthenticationBackend(ModelBackend):
                     username=data["preferred_username"][:150],
                     first_name=first_name,
                     last_name=last_name,
-                    email=data["upn"],
+                    email=data["preferred_username"],
                 )
                 user.save()
 
